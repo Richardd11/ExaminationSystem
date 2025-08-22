@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers\Admin;
+namespace App\Admin\Controllers;
 
-use App\Services\Auth\AuthService;
-use App\Services\User\UserService;
-use App\DAO\Auth\UserDAO;
+use App\Auth\Services\AuthService;
+use App\Auth\Services\UserService;
+use App\Auth\DAO\UserDAO;
 use App\Core\View;
 
 class AdminController
