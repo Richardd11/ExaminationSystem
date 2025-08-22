@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Services\User;
+namespace App\Auth\Services;
 
-use App\Interfaces\UserServiceInterface;
-use App\Interfaces\UserDAOInterface;
+use App\Auth\DAO\UserDAO;
 
 class UserService implements UserServiceInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Auth;
+namespace App\Auth\Services;
 
-use App\DAO\Auth\UserDAO;
+use App\Auth\DAO\UserDAO;
 
 class AuthService
 {

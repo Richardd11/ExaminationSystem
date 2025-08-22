@@ -5,9 +5,9 @@ session_start();
 require_once '../vendor/autoload.php';
 
 use App\Core\Router;
-use App\Controllers\Auth\AuthController;
-use App\Controllers\Admin\AdminController;
-use App\Controllers\Faculty\FacultyController;
+use App\Auth\Controllers\AuthController;
+use App\Admin\Controllers\AdminController;
+use App\Faculty\Controllers\FacultyController;
 
 // Initialize router
 $router = new Router();

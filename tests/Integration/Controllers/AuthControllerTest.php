@@ -3,7 +3,7 @@
 namespace Tests\Integration\Controllers;
 
 use PHPUnit\Framework\TestCase;
-use App\Controllers\Auth\AuthController;
+use App\Auth\Controllers\AuthController;
 
 class AuthControllerTest extends TestCase
 {

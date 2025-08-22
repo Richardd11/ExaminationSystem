@@ -1,9 +1,9 @@
 <?php
 
-namespace App\DAO\Auth;
+namespace App\Auth\DAO;
 
 use App\Config\Database;
-use App\Interfaces\UserDAOInterface;
+use App\Auth\Services\UserDAOInterface;
 use PDO;
 use PDOException;
 

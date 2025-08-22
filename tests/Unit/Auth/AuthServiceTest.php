@@ -3,8 +3,8 @@
 namespace Tests\Unit\Auth;
 
 use PHPUnit\Framework\TestCase;
-use App\Services\Auth\AuthService;
-use App\DAO\Auth\UserDAO;
+use App\Auth\Services\AuthService;
+use App\Auth\DAO\UserDAO;
 
 class AuthServiceTest extends TestCase
 {

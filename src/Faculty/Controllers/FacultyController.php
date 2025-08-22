@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers\Faculty;
+namespace App\Faculty\Controllers;
 
-use App\Services\Auth\AuthService;
+use App\Auth\Services\AuthService;
 use App\Core\View;
 
 class FacultyController

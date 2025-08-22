@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers\Auth;
+namespace App\Auth\Controllers;
 
-use App\Services\Auth\AuthService;
+use App\Auth\Services\AuthService;
 use App\Core\View;
 
 class AuthController
