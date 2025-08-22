@@ -3,7 +3,7 @@
 namespace Tests\Integration\Controllers;
 
 use PHPUnit\Framework\TestCase;
-use App\Controllers\Admin\AdminController;
+use App\Admin\Controllers\AdminController;
 
 class AdminControllerTest extends TestCase
 {

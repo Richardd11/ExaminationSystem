@@ -3,10 +3,10 @@
 namespace Tests\Unit\Admin;
 
 use PHPUnit\Framework\TestCase;
-use App\Controllers\Admin\AdminController;
-use App\Services\Auth\AuthService;
-use App\Services\User\UserService;
-use App\DAO\Auth\UserDAO;
+use App\Admin\Controllers\AdminController;
+use App\Auth\Services\AuthService;
+use App\Auth\Services\UserService;
+use App\Auth\DAO\UserDAO;
 use App\Core\View;
 use ReflectionClass;
 
