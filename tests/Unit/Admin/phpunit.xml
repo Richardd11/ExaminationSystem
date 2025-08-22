@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+         bootstrap="../../bootstrap.php"
+         colors="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         stopOnError="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         stopOnRisky="false"
+         failOnWarning="false"
+         failOnRisky="false"
+         failOnEmptyTestSuite="false"
+         >
+    
+    <testsuites>
+        <testsuite name="Admin Controller Unit Tests">
+            <file>AdminControllerTest.php</file>
+        </testsuite>
+    </testsuites>
+    
+    <php>
+        <!-- Suppress header warnings for unit tests -->
+        <ini name="error_reporting" value="E_ALL &amp; ~E_WARNING"/>
+        
+        <!-- Set test environment -->
+        <env name="APP_ENV" value="testing"/>
+        
+        <!-- Disable output buffering issues -->
+        <ini name="output_buffering" value="0"/>
+        
+        <!-- Set timezone for consistent testing -->
+        <ini name="date.timezone" value="UTC"/>
+    </php>
+    
+    <coverage>
+        <include>
+            <directory suffix=".php">../../../src/App/Controllers/Admin</directory>
+        </include>
+        <report>
+            <html outputDirectory="coverage"/>
+            <text outputFile="coverage.txt"/>
+        </report>
+    </coverage>
+    
+    <logging>
+        <junit outputFile="junit.xml"/>
+       
+    </logging>
+</phpunit>
