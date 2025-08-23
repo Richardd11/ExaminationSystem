@@ -6,6 +6,7 @@ class View
 {
     private $viewsPath;
     private $data = [];
+    private $lastResolvedModule = null;
 
     public function __construct($viewsPath = null)
     {
@@ -26,6 +27,45 @@ class View
     }
 
     /**
+     * Resolve a view name to an existing file path, supporting modular structure
+     */
+    private function resolveViewFile($view)
+    {
+        $this->lastResolvedModule = null;
+        $normalized = str_replace('.', '/', $view);
+        $candidates = [];
+        // Legacy/global Views directory
+        $candidates[] = $this->viewsPath . $normalized . '.php';
+
+        // Modular structure: src/{Module}/Views/{path}.php
+        $parts = explode('.', $view);
+        if (count($parts) >= 2) {
+            $module = array_shift($parts);
+            $moduleStudly = ucfirst($module);
+            $relative = implode('/', $parts);
+            $baseDir = dirname(__DIR__) . '/';
+            $candidates[] = $baseDir . $moduleStudly . '/Views/' . $relative . '.php';
+            $candidates[] = $baseDir . $module . '/Views/' . $relative . '.php';
+        }
+
+        foreach ($candidates as $candidate) {
+            if (file_exists($candidate)) {
+                // Remember module for layout resolution if applicable
+                $relativeFromSrc = strpos($candidate, dirname(__DIR__) . '/') === 0
+                    ? substr($candidate, strlen(dirname(__DIR__) . '/'))
+                    : '';
+                $segments = $relativeFromSrc !== '' ? explode('/', str_replace('\\', '/', $relativeFromSrc)) : [];
+                if (!empty($segments)) {
+                    $this->lastResolvedModule = $segments[0];
+                }
+                return $candidate;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Render a view
      */
     public function render($view, $data = [])
@@ -40,12 +80,12 @@ class View
         ob_start();
 
         // Include the view file
-        $viewFile = $this->viewsPath . str_replace('.', '/', $view) . '.php';
+        $viewFile = $this->resolveViewFile($view);
         
-        if (file_exists($viewFile)) {
+        if ($viewFile !== null) {
             include $viewFile;
         } else {
-            throw new \Exception("View file not found: {$viewFile}");
+            throw new \Exception("View file not found: " . ($this->viewsPath . str_replace('.', '/', $view) . '.php'));
         }
 
         // Get the content
@@ -73,13 +113,27 @@ class View
         // Start output buffering
         ob_start();
 
-        // Include the layout file
-        $layoutFile = $this->viewsPath . 'layouts/' . $layout . '.php';
+        // Include the layout file (search global then module-specific)
+        $candidates = [];
+        $candidates[] = $this->viewsPath . 'layouts/' . $layout . '.php';
+        if ($this->lastResolvedModule) {
+            $baseDir = dirname(__DIR__) . '/';
+            $candidates[] = $baseDir . $this->lastResolvedModule . '/Views/layouts/' . $layout . '.php';
+            $candidates[] = $baseDir . strtolower($this->lastResolvedModule) . '/Views/layouts/' . $layout . '.php';
+        }
         
-        if (file_exists($layoutFile)) {
+        $layoutFile = null;
+        foreach ($candidates as $candidate) {
+            if (file_exists($candidate)) {
+                $layoutFile = $candidate;
+                break;
+            }
+        }
+        
+        if ($layoutFile) {
             include $layoutFile;
         } else {
-            throw new \Exception("Layout file not found: {$layoutFile}");
+            throw new \Exception("Layout file not found: {$candidates[0]}");
         }
 
         // Return the content
